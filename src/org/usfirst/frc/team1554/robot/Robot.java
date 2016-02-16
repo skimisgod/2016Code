@@ -29,18 +29,26 @@ public class Robot extends EnhancedIterativeRobot {
     private final AutoJoystickUpdater updater;
 
     public Robot() {
+        // Set Robot Name and Team Number
         super("Sailors", 1554);
+        // Initialize Left and Right Tread Talons to appropriate Pin Numbers
         leftTread = new Talon(Ref.TALON_LEFT);
         rightTread = new Talon(Ref.TALON_RIGHT);
 
+        // Setup Built In Senses (RoboRIO Accelerometer/Gyro)
         senses = BasicSense.makeBuiltInSense();
+
+        // Create Motor Scheme for two motors with the two talons (includes RobotDrive)
         scheme = MotorScheme.Builder.newTwoChannelDrive(leftTread, rightTread).build();
-        scheme.setDriveManagement(DriveManager.TANK);
+        scheme.setDriveManagement(DriveManager.TANK); // Tank Drive
+
+        // Set up Dual Joystick Control (left and right USB Ports) and auto check for button presses
         joystick = new DualJoystickControl(Ref.JOYSTICK_LEFT, Ref.JOYSTICK_RIGHT);
         updater = new AutoJoystickUpdater(joystick);
     }
 
     @Override protected void onInitialization() {
+        // Setup button commands
         joystick.putButtonAction(Ref.LIFE_BUTTON, "Life Button", this::killMotors, Hand.RIGHT);
     }
 
@@ -49,6 +57,7 @@ public class Robot extends EnhancedIterativeRobot {
     }
 
     @Override public void dispose() {
+        // Free/Dispose things and stop all current non-daemon threads
         updater.stop();
     }
 
@@ -73,6 +82,7 @@ public class Robot extends EnhancedIterativeRobot {
     }
 
     @Override public void onTeleop() {
+        // Update Robot Drive from joysticks
         this.updateDrive();
     }
 
