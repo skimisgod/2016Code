@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Robot extends EnhancedIterativeRobot {
 
-    private final Talon leftTread, rightTread;
+    private final Talon leftTread, rightTread, shooter;
     private final MotorScheme scheme;
     private final BasicSense senses;
     private final JoystickControl joystick;
@@ -34,6 +34,7 @@ public class Robot extends EnhancedIterativeRobot {
         // Initialize Left and Right Tread Talons to appropriate Pin Numbers
         leftTread = new Talon(Ref.TALON_LEFT);
         rightTread = new Talon(Ref.TALON_RIGHT);
+        shooter = new Talon(Ref.TRIGGER_CHANNEL);
 
         // Setup Built In Senses (RoboRIO Accelerometer/Gyro)
         senses = BasicSense.makeBuiltInSense();
@@ -50,10 +51,15 @@ public class Robot extends EnhancedIterativeRobot {
     @Override protected void onInitialization() {
         // Setup button commands
         joystick.putButtonAction(Ref.LIFE_BUTTON, "Life Button", this::killMotors, Hand.RIGHT);
+        joystick.putButtonAction(Ref.TRIGGER, "Shoot Button", this::shoot, Hand.RIGHT);
     }
 
     private void killMotors() {
         // DOES STUFF
+    }
+    
+    private void shoot(){
+    	// DOES STUFF
     }
 
     @Override public void dispose() {
