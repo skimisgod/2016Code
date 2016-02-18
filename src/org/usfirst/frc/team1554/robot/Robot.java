@@ -19,10 +19,11 @@ import org.usfirst.frc.team1554.lib.common.system.MotorScheme.DriveManager;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends EnhancedIterativeRobot {
 
-    private final Talon leftTread, rightTread, shooter;
+    private final Talon leftTread, rightTread, feeder, shooter, pivot;
     private final MotorScheme scheme;
     private final BasicSense senses;
     private final JoystickControl joystick;
@@ -34,7 +35,10 @@ public class Robot extends EnhancedIterativeRobot {
         // Initialize Left and Right Tread Talons to appropriate Pin Numbers
         leftTread = new Talon(Ref.TALON_LEFT);
         rightTread = new Talon(Ref.TALON_RIGHT);
+        feeder = new Talon(Ref.FEEDER_CHANNEL);
+        pivot = new Talon(Ref.PIVOT_CHANNEL);
         shooter = new Talon(Ref.TRIGGER_CHANNEL);
+        
 
         // Setup Built In Senses (RoboRIO Accelerometer/Gyro)
         senses = BasicSense.makeBuiltInSense();
@@ -51,15 +55,29 @@ public class Robot extends EnhancedIterativeRobot {
     @Override protected void onInitialization() {
         // Setup button commands
         joystick.putButtonAction(Ref.LIFE_BUTTON, "Life Button", this::killMotors, Hand.RIGHT);
+        joystick.putButtonAction(Ref.FEED_BUTTON, "Feed Button", this::feedBall, Hand.RIGHT);
+        joystick.putButtonAction(Ref.PIVOT_BUTTON, "Pivot Button", this::pivotArm, Hand.RIGHT);
         joystick.putButtonAction(Ref.TRIGGER, "Shoot Button", this::shoot, Hand.RIGHT);
     }
 
     private void killMotors() {
-        // DOES STUFF
+        // DOES STUFF?
+    	scheme.getRobotDrive().stopMotor();
+    }
+    
+	
+    private void feedBall(){
+    	// Feeds ball into robot
+    }
+    
+    private void pivotArm(){
+    	// Pivots arm between feeding and shooting positions
+    	
     }
     
     private void shoot(){
-    	// DOES STUFF
+    	// Shoots boulder
+    	shooter.set(1);
     }
 
     @Override public void dispose() {
