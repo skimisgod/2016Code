@@ -108,6 +108,11 @@ public class Robot extends EnhancedIterativeRobot {
             shooter.set(0);
     }
 
+    @Override public void postTeleop() {
+        // Safety check
+        shooter.set(0);
+    }
+
     @Override public void onTest() {
 
     }
