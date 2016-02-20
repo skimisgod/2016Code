@@ -8,6 +8,7 @@ package org.usfirst.frc.team1554.robot;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+import edu.wpi.first.wpilibj.GenericHID;
 import org.usfirst.frc.team1554.lib.common.control.AutoJoystickUpdater;
 import org.usfirst.frc.team1554.lib.common.control.DualJoystickControl;
 import org.usfirst.frc.team1554.lib.common.control.Hand;
@@ -19,7 +20,6 @@ import org.usfirst.frc.team1554.lib.common.system.MotorScheme.DriveManager;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends EnhancedIterativeRobot {
 
@@ -57,11 +57,9 @@ public class Robot extends EnhancedIterativeRobot {
         joystick.putButtonAction(Ref.LIFE_BUTTON, "Life Button", this::killMotors, Hand.RIGHT);
         joystick.putButtonAction(Ref.FEED_BUTTON, "Feed Button", this::feedBall, Hand.RIGHT);
         joystick.putButtonAction(Ref.PIVOT_BUTTON, "Pivot Button", this::pivotArm, Hand.RIGHT);
-        joystick.putButtonAction(Ref.TRIGGER, "Shoot Button", this::shoot, Hand.RIGHT);
     }
 
     private void killMotors() {
-        // DOES STUFF?
     	scheme.getRobotDrive().stopMotor();
     }
     
@@ -73,11 +71,6 @@ public class Robot extends EnhancedIterativeRobot {
     private void pivotArm(){
     	// Pivots arm between feeding and shooting positions
     	
-    }
-    
-    private void shoot(){
-    	// Shoots boulder
-    	shooter.set(1);
     }
 
     @Override public void dispose() {
@@ -108,6 +101,11 @@ public class Robot extends EnhancedIterativeRobot {
     @Override public void onTeleop() {
         // Update Robot Drive from joysticks
         this.updateDrive();
+
+        if(joystick.rightJoystick().getTrigger(GenericHID.Hand.kRight))
+            shooter.set(1);
+        else
+            shooter.set(0);
     }
 
     @Override public void onTest() {
