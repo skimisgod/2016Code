@@ -66,6 +66,7 @@ public class Robot extends EnhancedIterativeRobot {
 	
     private void feedBall(){
     	// Feeds ball into robot
+    	feeder.set(1);
     }
     
     private void pivotArm(){
@@ -106,11 +107,18 @@ public class Robot extends EnhancedIterativeRobot {
             shooter.set(1);
         else
             shooter.set(0);
+        
+        
+        if(joystick.rightJoystick().getRawButton(Ref.FEED_BUTTON))
+        	feeder.set(1);
+        else
+        	feeder.set(0);
     }
 
     @Override public void postTeleop() {
         // Safety check
         shooter.set(0);
+        feeder.set(0);
     }
 
     @Override public void onTest() {
