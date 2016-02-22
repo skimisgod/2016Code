@@ -11,6 +11,6 @@ public class Ref {
     public static final int PIVOT_BUTTON = 3;
     public static final int TRIGGER_CHANNEL = 4;
     public static final int TRIGGER = 1;
-    
+    public static final int LIFT_BUTTON = 4;
 
 }
