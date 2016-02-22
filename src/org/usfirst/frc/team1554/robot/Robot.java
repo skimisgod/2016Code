@@ -62,11 +62,34 @@ public class Robot extends EnhancedIterativeRobot {
     @Override protected void onInitialization() {
         // Setup button commands
         joystick.putButtonAction(Ref.LIFE_BUTTON, "Life Button", this::killMotors, Hand.RIGHT);
+<<<<<<< HEAD
+=======
+        joystick.putButtonAction(Ref.FEED_BUTTON, "Feed Button", this::feedBall, Hand.RIGHT);
+        joystick.putButtonAction(Ref.PIVOT_BUTTON, "Pivot Button", this::pivotArm, Hand.RIGHT);
+        joystick.putButtonAction(Ref.LIFT_BUTTON, "Lift Button", this::liftTrap, Hand.RIGHT);
+>>>>>>> 6753c321c536cc3a9f4dac27ccfb23797fd9c667
     }
 
     private void killMotors() {
     	scheme.getRobotDrive().stopMotor();
     }
+<<<<<<< HEAD
+=======
+    
+	
+    private void feedBall(){
+    	// Feeds ball into robot
+    }
+    
+    private void liftTrap(){
+    	
+    }
+    
+    private void pivotArm(){
+    	// Pivots arm between feeding and shooting positions
+    	
+    }
+>>>>>>> 6753c321c536cc3a9f4dac27ccfb23797fd9c667
 
     @Override public void dispose() {
         // Free/Dispose things and stop all current non-daemon threads
@@ -102,7 +125,7 @@ public class Robot extends EnhancedIterativeRobot {
         else
             shooter.set(0);
         
-        
+
         if(joystick.leftJoystick().getTrigger(GenericHID.Hand.kLeft))
         	feeder.set(FEEDER_VALUE);
         else
