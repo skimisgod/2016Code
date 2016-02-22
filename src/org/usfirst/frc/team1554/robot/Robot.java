@@ -57,6 +57,7 @@ public class Robot extends EnhancedIterativeRobot {
         joystick.putButtonAction(Ref.LIFE_BUTTON, "Life Button", this::killMotors, Hand.RIGHT);
         joystick.putButtonAction(Ref.FEED_BUTTON, "Feed Button", this::feedBall, Hand.RIGHT);
         joystick.putButtonAction(Ref.PIVOT_BUTTON, "Pivot Button", this::pivotArm, Hand.RIGHT);
+        joystick.putButtonAction(Ref.LIFT_BUTTON, "Lift Button", this::liftTrap, Hand.RIGHT);
     }
 
     private void killMotors() {
@@ -66,7 +67,10 @@ public class Robot extends EnhancedIterativeRobot {
 	
     private void feedBall(){
     	// Feeds ball into robot
-    	feeder.set(1);
+    }
+    
+    private void liftTrap(){
+    	
     }
     
     private void pivotArm(){
@@ -111,7 +115,12 @@ public class Robot extends EnhancedIterativeRobot {
         
         if(joystick.rightJoystick().getRawButton(Ref.FEED_BUTTON))
         	feeder.set(1);
+        else if(joystick.rightJoystick().getRawButton(Ref.LIFT_BUTTON)){
+        	feeder.setInverted(true);
+    		feeder.set(1);
+        }
         else
+        	feeder.setInverted(false);
         	feeder.set(0);
     }
 
