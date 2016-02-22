@@ -29,6 +29,13 @@ public class Robot extends EnhancedIterativeRobot {
     private final JoystickControl joystick;
     private final AutoJoystickUpdater updater;
 
+    // Tune between 0 and 1
+    public static final double FEEDER_VALUE = 1.0;
+
+    public static final double SHOOTER_VALUE = 1.0;
+
+    public static final double PIVOT_VALUE = 0.01;
+
     public Robot() {
         // Set Robot Name and Team Number
         super("Sailors", 1554);
@@ -55,23 +62,10 @@ public class Robot extends EnhancedIterativeRobot {
     @Override protected void onInitialization() {
         // Setup button commands
         joystick.putButtonAction(Ref.LIFE_BUTTON, "Life Button", this::killMotors, Hand.RIGHT);
-        joystick.putButtonAction(Ref.FEED_BUTTON, "Feed Button", this::feedBall, Hand.RIGHT);
-        joystick.putButtonAction(Ref.PIVOT_BUTTON, "Pivot Button", this::pivotArm, Hand.RIGHT);
     }
 
     private void killMotors() {
     	scheme.getRobotDrive().stopMotor();
-    }
-    
-	
-    private void feedBall(){
-    	// Feeds ball into robot
-    	feeder.set(1);
-    }
-    
-    private void pivotArm(){
-    	// Pivots arm between feeding and shooting positions
-    	
     }
 
     @Override public void dispose() {
@@ -104,15 +98,23 @@ public class Robot extends EnhancedIterativeRobot {
         this.updateDrive();
 
         if(joystick.rightJoystick().getTrigger(GenericHID.Hand.kRight))
-            shooter.set(1);
+            shooter.set(SHOOTER_VALUE);
         else
             shooter.set(0);
         
         
-        if(joystick.rightJoystick().getRawButton(Ref.FEED_BUTTON))
-        	feeder.set(1);
+        if(joystick.leftJoystick().getTrigger(GenericHID.Hand.kLeft))
+        	feeder.set(FEEDER_VALUE);
         else
         	feeder.set(0);
+
+
+        if (joystick.rightJoystick().getRawButton(Ref.UP_PIVOT_BUTTON))
+            pivot.set(PIVOT_VALUE);
+        else if (joystick.rightJoystick().getRawButton(Ref.DOWN_PIVOT_BUTTON))
+            pivot.set(-PIVOT_VALUE);
+        else
+            pivot.set(0);
     }
 
     @Override public void postTeleop() {
